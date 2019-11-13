@@ -1,5 +1,4 @@
 FROM php:7.3-fpm
-
 RUN buildDeps=" \
         default-libmysqlclient-dev \
         libbz2-dev \
@@ -30,7 +29,6 @@ RUN buildDeps=" \
     && docker-php-ext-enable memcached.so redis.so \
     && apt-get purge -y --auto-remove $buildDeps \
     && rm -r /var/lib/apt/lists/* \
-
 # Install Composer.
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && ln -s $(composer config --global home) /root/composer
