@@ -14,6 +14,8 @@ services:
     volumes:
       - ./www:/var/www
       - ./php/conf/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - app-network
 
   webserver:
     image: nginx:latest
@@ -25,21 +27,25 @@ services:
     volumes:
       - ./www:/var/www
       - ./nginx/conf.d/:/etc/nginx/conf.d/
-
+    networks:
+      - app-network
 
   db:
     image: mysql:latest
     container_name: db
     tty: true
     ports:
-      - "3307:3306"
+      - "3306:3306"
+    expose:
+      - "3306"
     environment:
-      MYSQL_DATABASE: your-databasename
+      MYSQL_DATABASE: yourDatabaseName
       MYSQL_ROOT_PASSWORD: root
       MYSQL_USER: user
       MYSQL_PASSWORD: root
-      SERVICE_TAGS: dev
-      SERVICE_NAME: mysql
-    volumes:
-      - ./data/dbdata:/var/lib/mysql
-      - ./data/mysql/my.cnf:/etc/mysql/my.cnf
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
