@@ -41,6 +41,8 @@ db:
     tty: true
     ports:
       - "3306:3306"
+    expose:
+      - "3306"
     environment:
       MYSQL_DATABASE: yourDatabaseName
       MYSQL_ROOT_PASSWORD: root
