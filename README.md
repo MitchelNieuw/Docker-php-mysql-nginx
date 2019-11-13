@@ -1,6 +1,6 @@
 # Docker template
 PHP 7.3 <br>
-Mysql 5.7 <br>
+Mysql latest <br>
 Nginx latest
 
 # Set up
@@ -36,7 +36,7 @@ server {
 
 ```yaml
 db:
-    image: mysql:5.7
+    image: mysql:latest
     container_name: db
     tty: true
     ports:
@@ -51,6 +51,4 @@ db:
     volumes:
       - ./data/dbdata:/var/lib/mysql
       - ./data/mysql/my.cnf:/etc/mysql/my.cnf
-    networks:
-      - app-network
 ```
