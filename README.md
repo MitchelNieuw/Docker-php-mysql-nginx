@@ -40,15 +40,12 @@ db:
     container_name: db
     tty: true
     ports:
-      - "3307:3306"
+      - "3306:3306"
     environment:
-      MYSQL_DATABASE: your-databasename
+      MYSQL_DATABASE: yourDatabaseName
       MYSQL_ROOT_PASSWORD: root
       MYSQL_USER: your user
       MYSQL_PASSWORD: your password
-      SERVICE_TAGS: dev
-      SERVICE_NAME: mysql
-    volumes:
-      - ./data/dbdata:/var/lib/mysql
-      - ./data/mysql/my.cnf:/etc/mysql/my.cnf
+    networks:
+      - app-network
 ```
