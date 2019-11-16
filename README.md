@@ -13,7 +13,7 @@ server {
     index index.php index.html;
     error_log  /var/log/nginx/rest-error.log;
     access_log /var/log/nginx/rest-access.log;
-    root /var/www/your-project/public;
+    root /var/www/your-project;
     location ~ \.php$ {
         try_files $uri =404;
         fastcgi_split_path_info ^(.+\.php)(/.+)$;
