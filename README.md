@@ -1,6 +1,6 @@
 # Docker template
 PHP 7.3 <br>
-Mysql latest <br>
+Mysql 5.7 <br>
 Nginx latest
 
 # Set up
@@ -38,16 +38,11 @@ server {
 db:
     image: mysql:latest
     container_name: db
-    tty: true
     ports:
       - "3306:3306"
-    expose:
-      - "3306"
     environment:
       MYSQL_DATABASE: yourDatabaseName
       MYSQL_ROOT_PASSWORD: root
       MYSQL_USER: your user
-      MYSQL_PASSWORD: your password
-    networks:
-      - app-network
+      MYSQL_PASSWORD: yourPassword
 ```
