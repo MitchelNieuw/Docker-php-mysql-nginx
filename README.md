@@ -1,6 +1,6 @@
 # Docker template
-PHP 7.3 <br>
-Mysql 5.7 <br>
+PHP 8.1 <br>
+Mysql latest <br>
 Nginx latest
 
 # Set up
