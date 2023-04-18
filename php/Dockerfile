@@ -1,34 +1,49 @@
-FROM php:7.3-fpm
-RUN buildDeps=" \
-        default-libmysqlclient-dev \
-        libbz2-dev \
-        libmemcached-dev \
-        libsasl2-dev \
-    " \
-    runtimeDeps=" \
+FROM php:8.1-fpm
+
+# Install Dependencies
+RUN apt-get update \
+    && apt-get upgrade -y \
+    && apt-get install -y --no-install-recommends \
+        ca-certificates \
         curl \
-        git \
-        libfreetype6-dev \
-        libicu-dev \
-        libjpeg-dev \
-        libldap2-dev \
-        libmemcachedutil2 \
+        sqlite3 \
+        memcached \
+        libzip-dev \
         libpng-dev \
+        libmcrypt-dev \
+        zip \
+        libcurl4-openssl-dev \
+        libedit-dev \
+        libssl-dev \
+        libonig-dev \
         libpq-dev \
         libxml2-dev \
-        libzip-dev \
-    " \
-    && apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y $buildDeps $runtimeDeps \
-    && docker-php-ext-install bcmath bz2 calendar iconv intl mbstring mysqli opcache pdo_mysql pdo_pgsql pgsql soap zip \
-    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-    && docker-php-ext-install gd \
-    && docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ \
-    && docker-php-ext-install ldap \
-    && docker-php-ext-install exif \
-    && pecl install memcached redis \
-    && docker-php-ext-enable memcached.so redis.so \
-    && apt-get purge -y --auto-remove $buildDeps \
-    && rm -r /var/lib/apt/lists/* \
-# Install Composer.
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
-    && ln -s $(composer config --global home) /root/composer
+        xz-utils \
+        libsqlite3-dev \
+        git \
+        vim \
+        nano \
+        net-tools \
+        pkg-config \
+        iputils-ping
+
+# Install PHP Extensions
+RUN docker-php-ext-install gd \
+    bcmath \
+    calendar \
+    iconv \
+    ctype \
+    intl \
+    xml \
+    pcntl \
+    mysqli \
+    opcache \
+    pdo \
+    pdo_mysql \
+    pgsql \
+    zip
+
+# Install Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN ln -s $(composer config --global home) /root/composer
+RUN rm -rf /tmp/*
